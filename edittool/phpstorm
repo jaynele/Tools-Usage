@@ -1,0 +1,60 @@
+近期在做有关PHP的项目，IDE为phpstorm，之前做C#的时候，vs的调试功能很是喜欢，于是开始查找有关phpstorm调试的相关资料。由于之前是做桌面应用程序，以为web程序的调试和桌面程序相差无几，但是我错了，原来还需要浏览器相互配合的，下面把自己的调试环境配置过程记录下来，纠结了一个下午，好歹有点收获吧！
+
+ 
+首先，把自己参考的网上材料的连接黏贴出来，是英文的，但是讲解的很详细，有兴趣的同学可以看一下。
+1、http://blog.jetbrains.com/webide/2011/02/zero-configuration-debugging-with-xdebug-and-phpstorm-2-0/
+ 
+2、http://blog.jetbrains.com/webide/2011/03/configure-php-debugging-in-phpstorm-2-0/
+在配置过程中，我主要参考了以上两篇文章，国外的人写的就是详细。
+提示：本篇的配置环境是Windows7操作系统
+1、下载Xdebug 网址为http://xdebug.org/download.php
+截图如下：
+
+ 
+
+我下载的是最新版本 大家可以看到 每一个文件分为TS版本和非TS版本 起初我还不能明白这时什么意思 后来了解到TS代表的应该是thread safe(线程安全) 不知道理解的对不对 对于php的了解不是很深入 这里我也不是很明白两者之间的关系 开始配置的时候 我下载的是非TS版本 结果证明我错了 搞了很久 向php.ini添加配置信息的之后 使用命令行转到php的解压缩文件目录之下 运行php.exe -m之后 始终不能看到Xdebug模块的加载  后来尝试了5.2 VC9 TS (32 bit 我的电脑是32位的)这个版本之后 终于成功了 所以建议大家下载第二个版本 如果不行的话 可以尝试第一个版本 鉴于每台电脑的不同 大家可以多尝试一下
+2、配置php.ini
+找到php.ini所在的目录 在该文件的最后添加以下文本
+zend_extension_ts="E:\php5\ext\php_xdebug-2.2.3-5.2-vc9.dll"//这里是上一步下载的动态链接库的存放路径 建议使用绝对路径
+xdebug.remote_enable=1//是否允许远程终端 这里标示开启
+xdebug.remote_handler=dbgp
+xdebug.remote_mode=req
+xdebug.remote_host=localhost
+xdebug.remote_port=9000//这里表示服务器的监听端口
+xdebug.idekey="PHPSTORM";//这里是调试器的关键字 在Chrome以及FireFox中插件配置的时候要用到
+ 
+3、验证Xdebug是否安装成功
+下面提供两种检查方式
+(1)第一种是通过xdebug.org的官网进行检查 如果以上步骤的配置信息没有错误 重启apache服务器 在根目录创建index.php文件 文件的内容为<?php echo phpinfo(); ?> 将浏览器的输出信息全选之后 黏贴到http://xdebug.org/wizard.php的文本框内 点击按钮 会提示一下结果
+如果系统成功安装了Xdebug那么在第一项Xdebug installed出会显示当前Xdebug的版本号 如果安装不成功的话 则会显示no
+ 
+(2)在命令行中 使用cd命令 将当前操作目录转到php.exe所在的目录之下 键入php.exe -m命令 即可看到当前php已经加载的模块信息 如下图所示：
+如果Xdebug安装成功 则会看到此模块
+如果没有成功 请检查其他配置信息是否出错
+
+ 
+4、phpstorm中服务器的配置
+打开phpstorm 点击红色箭头指向的按钮 打开Setting窗体
+
+选择PHP里面的Servers选项 添加服务器
+
+点击绿色的加号添加一个服务器 分别填写名称以及主机(host)地址 勾选using path mapping 这里是否勾选此复选框带来的影响可以参考如下网址
+http://blog.jetbrains.com/webide/2011/03/configure-php-debugging-in-phpstorm-2-0/
+ 
+服务器配置好以后点击PHP/Debug/DBGp Proxy选项 在里面设置ide key 注意这里的值和上面xdebug.idekey的值是相同的 host地址一定要是上面servers中添加的其中的一个主机地址
+
+之后点击配置按钮左边的按钮 进行监听 如图中绿色的电话形状的按钮即表示服务器已经处于监听状态
+
+ 
+下面只讲述FireFox下如何配置Xdebug
+(1)到火狐组件扩展中心下载The easiest Xdebug 1.1.1 我现在使用的版本就是1.1.1
+(2)打开火狐浏览器的扩展中心 点击选项按钮
+
+(3)将IDE key对应的值设置为xdebug.idekey的值 如下图所示
+
+(4)这个时候可以看到火狐浏览器右下角有一个爬虫标志 不过没启动状态下是灰色的
+
+点击它 就会变成绿色 
+然后再地址栏输入localhost/myclass(其中myclass是我的项目名称) 此时确保你的phpstorm已经处于监听状态 在index.php中设置一个断点就可以进行调试了 如下图所示
+
+ 
