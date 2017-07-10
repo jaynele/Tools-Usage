@@ -1,0 +1,13 @@
+1、下载：
+英文网站：getcomposer.org
+中文镜像打开:phpcomposer.com
+2、点击运行，无图标，cmd窗口来运行
+命令1：composer
+3、composer 安装laravel
+cmd  g:
+cd 
+命令1：composer create-project laravel/laravel
+4、自己配置包
+composer.json  文件里配置包名
+命令：composer install
+5、http.conf    开启rewrite,vhost    openssl mb_string
