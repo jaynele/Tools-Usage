@@ -1,8 +1,10 @@
-phpstorm   
+phpstorm     代码字段，文件名字切记要有意义 
 1、编码
 （1）右下角进行切换，只是单个页面进行编码设置   
 （2）总体进行设置，file-》setting->editor->fileEcode  把所有的编码显示的位置都设置为utf-8
 2、查找文件
 （1）ctrl+shift+N    输入文件名字
-（2）ctrl+tab    切换打开的文件
-（3）
+（2）ctrl+N    查找类
+（3）ctrl+shift+alt+N    查找项目中的方法，只输入方法名就可以
+（4）ctrl+tab    切换打开的文件
+（5）ctrl+F    在当前窗口找东西
