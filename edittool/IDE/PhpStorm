@@ -8,3 +8,13 @@ phpstorm     代码字段，文件名字切记要有意义
 （3）ctrl+shift+alt+N    查找项目中的方法，只输入方法名就可以
 （4）ctrl+tab    切换打开的文件
 （5）ctrl+F    在当前窗口找东西
+3、设置字体界面风格
+Settings->Appearance中
+Theme 设置 Windows
+勾选Override default fonts by (not recommended)，设置字体为宋体，12
+4、显示文件行号
+setting->editor->appearance->show line number
+5、光标不随意定位
+Settings->Editor中去掉Allow placement of caret after end of line。
+6、启动的时候不打开工程文件
+Settings->General去掉Reopen last project on startup.
